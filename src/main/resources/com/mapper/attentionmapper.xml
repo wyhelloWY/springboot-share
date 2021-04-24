@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.share.springboot.mapper.AttentionListMapper">
+
+    <select id="selectAllMyAttention" parameterType="String" resultType="com.share.springboot.entity.AttentionList">
+            select * from attention_list where attention_id =#{attention_id} and attention_status =1
+    </select>
+
+    <select id="selectAllElseAttention" parameterType="String" resultType="com.share.springboot.entity.AttentionList">
+        select * from attention_list where followed_id =#{followed_id} and attention_status =1
+    </select>
+
+    <select id="selectAttention" parameterType="String" resultType="int">
+        select attention_status from attention_list where attention_id =#{attention_id} and followed_id =#{followed_id}
+    </select>
+
+    <select id="selectExist" resultType="int">
+        select count(*) from attention_list where attention_id =#{attention_id} and followed_id =#{followed_id}
+    </select>
+
+
+    <insert id="insertAttention" parameterType="com.share.springboot.entity.AttentionList">
+        insert into attention_list
+        (attention_id,
+        followed_id,
+        attention_status)
+        values
+        (#{attention_id},
+        #{followed_id},
+        #{attention_status})
+    </insert>
+
+
+    <update id="updateAttentionOne" parameterType="String">
+        update attention_list set attention_status=1 where attention_id =#{attention_id} and followed_id =#{followed_id}
+
+    </update>
+
+    <update id="updateAttentionTwo" parameterType="String">
+        update attention_list set attention_status=0 where attention_id =#{attention_id} and followed_id =#{followed_id}
+
+    </update>
+
+
+
+</mapper>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>图片详情页</title>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+			  th:href="@{//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/pic_content.css" th:href="@{/sharestyle/css/pic_content.css}"/>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css"
+		th:href="@{https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css}">
+		<script src="js/jquery.js" th:src="@{/sharestyle/js/jquery.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="js/pic_content.js" th:src="@{/sharestyle/js/pic_content.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js" th:src="@{https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js}"></script>
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js" th:src="@{https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js}"></script>
+	</head>
+	<body>
+		<div class="header">
+			
+				<div class="top">
+					<div class="topleft">
+						<span class="logo">Share</span>
+						<span id="one_content_id" style="display: none" th:text="${session.contentList.content_id}"></span>
+					</div>	
+					<div class="topright">
+						<ul>
+							<li class="first_page">首页</li>
+							<li class="Acts">
+								<i class="fa fa-yelp fa-1x" aria-hidden="true"></i></i>
+								<span class="ActsBtn">pic详情</span>
+							</li>
+							<li class="login">
+								<i class="fa fa-user-o fa-1x" aria-hidden="true"></i>
+								<span>
+									<img th:src="@{/pictures/{avatar_image}(avatar_image=${session.avatar_image})}" class="firstPageInfoImg">
+								</span>
+							</li>
+						</ul>		
+					</div>
+				</div>
+				<div class="down">
+					<div class="wenzi">
+						<div id="pics">
+							<span class="pic_id" id="content_id" style="display: none" th:text="${session.contentList.content_id}"></span>
+							<span>图片</span>
+							<img th:src="@{/pictures/{image_file}(image_file=${session.contentList.image_file})}" class="pic_img">
+							<div class="info-picture-content">
+								<div class="info-picture-love">
+									<span class="fav_id" style="display: none;" th:text="${session.contentList.like_status}">0</span>
+									<i class="fa fa-heart fa-2x" aria-hidden="true"></i>
+									<i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+									<span class="picture-love-num" id="content_like" th:text="${session.contentList.content_like}"></span>
+								</div>
+							</div>
+						</div>
+						<div id="fabu_man">
+							<span >发布者</span>
+							<img th:src="@{/pictures/{avatar_image}(avatar_image=${session.contentList.avatar_image})}" class="fabu_man_img">
+							<span class="fabu_man_name" th:text="${session.contentList.user_name}"></span>
+							<span class="fabu_man_id" id="announcer_id" style="display: none;" th:text="${session.contentList.announcer_id}"></span>
+						</div>
+						<div class="fabu_date">
+							<span>发布日期</span>
+							<span id="date" th:text="${#dates.format(session.contentList.content_date,'yyyy-MM-dd HH:mm')}"></span>
+						</div>
+						<div class="add_attention">
+							<i class="fa fa-plus-square fa-2x" aria-hidden="true" style="display: none;"></i>
+							<i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
+							<span class="att_span">关注</span>
+							<span class="att_id" style="display: none" th:text="${session.contentList.attention_status}"></span>
+						</div>
+					</div>
+					
+				</div>
+		</div>
+		<div class="container">
+			<div class="comment_men">
+				<div class="comment_people">
+				</div>
+
+
+			</div>
+			<div id="comment-container"  class="ui teal segment">
+
+				<div th:fragment="allCommentList">
+					<div class="ui threaded comments " style="max-width: 100%;">
+
+						<h3 class="ui dividing header">评论</h3>
+
+						<div class="comment" th:each="comment : ${comments}">
+							<a class="avatar">
+								<img th:src="@{/pictures/{image_file}(image_file=${comment.image_file})}" >
+							</a>
+							<div class="content">
+								<a class="author" >
+
+									<span th:text="${comment.username}">小红</span>
+								</a>
+								<div class="metadata">
+
+									<span class="date" th:text="${#dates.format(comment.comment_date,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
+								</div>
+								<div class="text" th:text="${comment.comment_content}">
+									愿你走出半生，归来仍是少年！
+								</div>
+								<div class="actions">
+									<a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.comment_id},
+									data-commentuserid=${comment.comment_user_id},data-commentusername=${comment.username}" onclick="reply(this)">回复</a>
+								</div>
+							</div>
+							<!--子集评论-->
+							<div class="comments" th:if="${#arrays.length(comment.replyComments)}>0">
+								<div class="comment" th:each="reply : ${comment.replyComments}">
+									<a class="avatar">
+
+										<img th:src="@{/pictures/{image_file}(image_file=${reply.image_file})}">
+									</a>
+									<div class="content">
+										<a class="author" >
+											<span th:text="${reply.username}">小白</span>
+											&nbsp;<span th:text="|@ ${reply.parentUsername}|" class="m-teal">@ 小红</span>
+										</a>
+										<div class="metadata">
+											<span class="date" th:text="${#dates.format(reply.comment_date,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
+										</div>
+										<div class="text" th:text="${reply.comment_content}">
+											你也是！
+										</div>
+										<div class="actions">
+											<a class="reply" th:attr="data-commentid=${reply.comment_id},
+									data-commentuserid=${reply.comment_user_id},data-commentusername=${reply.username}" onclick="reply(this)">回复</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div id="comment-form" class="ui form">
+				<input type="hidden" name="parentComment.comment_id" value="-1">
+				<div class="field">
+					<textarea name="comment_content" placeholder="请输入评论信息..."></textarea>
+				</div>
+				<div class="fields">
+
+					<div class="field  m-margin-bottom-small m-mobile-wide">
+						<button id="commentpost-btn" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>发布</button>
+						<button id="comment_delete" type="button" class="ui teal button m-mobile-wide"><i class="edit icon"></i>取消回复</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<script th:inline="javascript">
+		// $("#abcdefg").append("你好你好");
+		userLikes();
+		function userLikes() {
+			$.ajax({
+				//请求方式
+				type : "GET",
+				//请求的媒体类型
+				//contentType: "application/json;charset=UTF-8",
+				//请求地址
+				url : "/share/likeList/getUserLikes",
+				//数据，json字符串
+				data : {content_id:[[${session.contentList.content_id}]]},
+				dataType:"json",
+				//请求成功
+				success : function(data) {
+					$(".comment_people").empty();
+					if(null != data && "" != data){
+						var arr = [];
+						for(var item in data){
+							arr.push(data[item]);
+						}
+						/*<![CDATA[*/
+						 for (var i = 0; i < arr.length; i++) {
+							/*]]>*/
+							 console.log(arr[i]);
+							// alert("dadsds");
+							 var like_people = $('<span class="comment_first_man">' +
+									 arr[i].username+'</span><span>丶</span>');
+							$(".comment_people").append(like_people);
+						 }
+						$(".comment_people").append('<span>等<span class="comment_num">[[${session.contentList.content_like}]]</span>人喜欢....</span>');
+					}else{
+						$(".comment_people").append('<div class="baocuo" style="width: 200px;margin-left: auto;margin-right: auto; background-color: #1ABC9C;font-size: 12px; <!-- display: none; -->"> ' +
+								'<h1 style="font-size: 15px;color: white;line-height: 20px;">此内容目前无人点赞</h1> </div>');
+					}
+
+				},
+				//请求失败，包含具体的错误信息
+				error : function(e){
+					console.log(e.status);
+					console.log(e.responseText);
+				}
+			});
+		}
+		$(".comment_first_man").text();
+		$(".comment_second_man").text();
+		$(".comment_num").text();
+
+		//评论表单验证
+		// $('.ui.form').form({
+		// 	fields: {
+		// 		title: {
+		// 			identifier: 'comment_content',
+		// 			rules: [{
+		// 				type: 'empty',
+		// 				prompt: '请输入评论内容'
+		// 			}]
+		// 		}
+		// 	}
+		// });
+
+
+		 $(function () {
+			 var url = '/share/comment/AllComment/'+[[${session.contentList.content_id}]];
+		     $("#comment-container").load(url);
+		     // alert(url);
+		 });
+
+		$('#commentpost-btn').click(function () {
+			var boo = $('.ui.form').form('validate form');
+			if (boo) {
+				console.log('校验成功');
+				postData();
+				$("[name='comment_content']").val("");
+			} else {
+				console.log('校验失败');
+			}
+		});
+
+		$('#comment_delete').click(function () {
+			$("[name='comment_content']").val("");
+			$("[name='comment_content']").attr("placeholder", "请输入评论信息...").focus();
+			$("[name='parentComment.comment_id']").val("-1");
+		});
+
+		function postData() {
+			var url = '/share/comment/getAllComment';
+			$("#comment-container").load(url,{
+				"parentComment.comment_id" : $("[name='parentComment.comment_id']").val(),
+				"comment_content_id": [[${session.contentList.content_id}]],
+				"comment_content" : $("[name='comment_content']").val()
+			},function (responseTxt, statusTxt, xhr) {
+				// $(window).scrollTo($('#goto'),0);
+				clearContent();
+			});
+		}
+
+		function clearContent() {
+			$("[name='nickname']").val('');
+			$("[name='email']").val('');
+			$("[name='content']").val('');
+			$("[name='parentComment.id']").val(-1);
+			$("[name='content']").attr("placeholder", "请输入评论信息...");
+		}
+
+		function reply(obj) {
+			var commentId = $(obj).data('commentid');
+			var commentNickname = $(obj).data('commentusername');
+			// alert(commentId+commentNickname);
+			$("[name='comment_content']").attr("placeholder", "@"+commentNickname).focus();
+			$("[name='parentComment.comment_id']").val(commentId);
+			window.scrollTo($('#comment-form'),500);
+		}
+		//显示点赞人
+
+	</script>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>他人主页</title>
+		<link rel="stylesheet" type="text/css" href="css/Objinfo.css" th:href="@{/sharestyle/css/Objinfo.css}"/>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+			  th:href="@{//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+			  th:href="@{https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css}">
+
+		<script src="js/jquery.js" th:src="@{/sharestyle/js/jquery.js}" type="text/javascript" charset="utf-8"></script>
+		<!-- <script src="./js/infopubuliu.js" type="text/javascript" charset="utf-8"></script> -->
+		<script src="js/Objinfo.js" th:src="@{/sharestyle/js/Objinfo.js}" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="header">
+
+			<div class="top">
+				<div class="topleft">
+					<span class="logo">Share</span>
+				</div>
+				<div class="topright">
+					<ul>
+						<li class="first_page">首页</li>
+						<li class="login">
+							<i class="fa fa-user-o fa-1x" aria-hidden="true"></i>
+							<span>
+								<img th:src="@{/pictures/{avatar_image}(avatar_image=${session.avatar_image})}" class="firstPageInfoImg">
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="down">
+				<div class="someInfomation">
+					<span class="usertitle">Some简介</span>
+					<span id="object_user_phone" style="display: none" th:text="${elseList.user_id}"></span>
+					<img th:src="@{/pictures/{avatar_image}(avatar_image=${elseList.avatar_image})}" class="useravater">
+					<span class="username" th:text="${elseList.user_name}">像风一样的男人</span>
+					<p class="usermotto" th:text="${elseList.user_motto}">#个性签名##个性签名#</p>
+				</div>
+				<div class="UlInfomation">
+					<ul>
+						<li class="one">已发布图片</li>
+						<li>留言板</li>
+					</ul>
+				</div>
+				<div class="add_attention">
+					<i class="fa fa-plus-square fa-2x" aria-hidden="true" style="display: none;"></i>
+					<i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
+					<span class="att_span">关注</span>
+					<span class="att_id" style="display: none" th:text="${elseList.status}"></span>
+				</div>
+			</div>
+		</div>
+		<div class="app">
+		<div class="container">
+			<ul>
+				<li class="infoFabu" id="box2">
+					<div class="infoItems">
+
+
+					</div>
+
+
+				</li>
+				<li class="LeaveMessages">
+					<!-- 留言按鈕 -->
+						<div class="panel panel-success">
+						    <div class="panel-heading">
+						        <h3 class="panel-title">发布留言</h3>
+						    </div>
+						    <div class="panel-body">
+								<form class="form-horizontal" role="form" id="leave_message">
+									<div class="form-group">
+										<div class="col-xs-12">
+											<textarea class="form-control comment" rows="5" placeholder="请输入内容" id="content" name="message_content"></textarea>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-xs-10">
+											<input type="button" name="" id="" value="发布" class="send btn btn-primary" disabled=" disabled"/>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="leavegroup">
+<!--							<div class="Leave_A_Message">-->
+<!--								<div class="Leave_man">-->
+<!--									<img th:src="@{/sharestyle/img/03.jpg}" >-->
+<!--									<span>name</span>-->
+<!--								</div>-->
+<!--								<div class="leave_content">-->
+<!--									<p class="messagecontent">愿你快快乐乐愿你快快乐乐愿你快快乐乐愿你快快乐乐愿你快快乐乐愿你快快乐乐</p>-->
+<!--								</div>-->
+<!--							</div>-->
+						</div>
+				</li>
+				<li class="inviteCode">
+					<span>请前往移动端查看</span>
+				</li>
+				
+			</ul>
+
+		</div>
+		</div>
+	</body>
+</html>

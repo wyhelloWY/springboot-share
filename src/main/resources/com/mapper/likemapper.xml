@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.share.springboot.mapper.LikeListMapper">
+    <select id="selectAll" parameterType="String" resultType="com.share.springboot.entity.LikeList">
+        select * from like_list where like_content_id = #{like_content_id} and like_status>0 limit 0,3
+
+    </select>
+
+    <select id="selectStatus" resultType="int" parameterType="String">
+        select like_status from like_list where liker_id = #{liker_id} and like_content_id = #{like_content_id} limit 0,1
+
+    </select>
+
+    <select id="selectExist" resultType="int" parameterType="String">
+        select count(*) from like_list where liker_id = #{liker_id} and like_content_id = #{like_content_id}
+
+    </select>
+    <insert id="insertOne" parameterType="com.share.springboot.entity.LikeList">
+        insert into like_list
+        (liker_id,
+        liked_id,
+        like_content_id,
+        like_status)
+        values
+        (#{liker_id},
+        #{liked_id},
+        #{like_content_id},
+        #{like_status})
+
+    </insert>
+
+    <update id="updateOne" parameterType="String">
+        update like_list set like_status=0 where liker_id = #{liker_id} and like_content_id = #{like_content_id}
+    </update>
+
+    <update id="updateTwo" parameterType="String">
+        update like_list set like_status= 1 where liker_id = #{liker_id} and like_content_id = #{like_content_id}
+    </update>
+</mapper>

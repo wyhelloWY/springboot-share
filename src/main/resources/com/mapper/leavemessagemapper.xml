@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.share.springboot.mapper.LeaveMessageMapper">
+
+    <select id="selectById" parameterType="String" resultType="com.share.springboot.entity.LeaveMessage">
+        select * from leave_message where message_user_id = #{message_user_id}
+
+    </select>
+
+    <insert id="insertLeaveMessage" parameterType="com.share.springboot.entity.LeaveMessage">
+        insert into leave_message(
+        user_id,
+        message_user_id,
+        message_content,
+        message_date,
+        message_id
+        ) values (
+        #{user_id},
+        #{message_user_id},
+        #{message_content},
+        #{message_date},
+        #{message_id}
+        )
+
+    </insert>
+</mapper>
