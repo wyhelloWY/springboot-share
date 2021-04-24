@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>活动页面</title>
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+		th:href="@{//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}">
+		<link rel="stylesheet" type="text/css" href="css/Activitis.css" th:href="@{/sharestyle/css/Activitis.css}"/>
+		
+		
+		<script src="js/jquery.js" th:src="@{/sharestyle/js/jquery.js}" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Activities.js" th:src="@{/sharestyle/js/Activities.js}" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="header">
+			
+				<div class="top">
+					<div class="topleft">
+						<span class="logo">Share</span>
+					</div>
+					<div class="topright">
+						<ul>
+							<li class="first_page">首页</li>
+							<li class="Acts">
+								<i class="fa fa-server fa-1x" aria-hidden="true"></i>
+								<span class="ActsBtn">活动页</span>
+							</li>
+							<li class="login">
+								<i class="fa fa-user-o fa-1x" aria-hidden="true"></i>
+								<span>
+									<img th:src="@{/pictures/{avatar_image}(avatar_image=${session.avatar_image})}" class="firstPageInfoImg">
+								</span>
+							</li>x
+						</ul>		
+					</div>
+				</div>
+				<div class="down">
+					<div class="wenzi">
+						<span>精彩活动</span>
+						<span>这里有只有你想不到的 没有你看不到的</span>
+						<span>请选择你想要参加的活动吧</span>
+					</div>
+				</div>
+		</div>
+		<div class="container">	
+			<div class="Acts_left" id="AllActivity">
+<!--				<div class="activity">-->
+<!--					<div class="activity-fabu">-->
+<!--						<span>发布者</span>-->
+<!--						<p class="activity-fabu-people">帅哥</p>-->
+<!--						<span>日期</span>-->
+<!--						<p class="activity-fabu-date">2020.4.29</p>-->
+<!--					</div>-->
+<!--					<img th:src="@{/sharestyle/img/03.jpg}" class="activity-img">-->
+<!--					<span class="activity-title" id="">活动内容</span>-->
+<!--					<span class="act_id">111</span>-->
+<!--				</div>-->
+			</div>
+		</div>
+	</body>
+</html>

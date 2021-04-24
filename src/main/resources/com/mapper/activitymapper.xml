@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.share.springboot.mapper.ActivityListMapper">
+    <select id="selectAllContentTime" resultType="com.share.springboot.entity.ActivityList">
+        select * from activity_list order by activity_date desc
+
+    </select>
+
+    <select id="selectAllContentPeople" resultType="com.share.springboot.entity.ActivityList">
+        select * from activity_list order by activity_date desc limit 0,4
+
+    </select>
+
+    <select id="selectByUser" resultType="com.share.springboot.entity.ActivityList" parameterType="String">
+        select * from activity_list where activity_organizer_id = #{activity_organizer_id}
+
+    </select>
+
+    <select id="selectById" resultType="com.share.springboot.entity.ActivityList" parameterType="String">
+        select * from activity_list where activity_id = #{activity_id}
+
+    </select>
+
+    <insert id="insertOne"  parameterType="com.share.springboot.entity.ActivityList">
+        insert into activity_list(
+        activity_id,
+        image_file,
+        activity_name,
+        activity_organizer_id,
+        activity_date,
+        activity_content
+        )
+        values
+        (
+        #{activity_id},
+        #{image_file},
+        #{activity_name},
+        #{activity_organizer_id},
+        #{activity_date},
+        #{activity_content}
+        )
+
+    </insert>
+
+    <delete id="deleteOne" parameterType="String">
+        delete from activity_list where activity_id = #{activity_id}
+    </delete>
+</mapper>

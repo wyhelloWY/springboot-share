@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css" th:href="@{/sharestyle/css/login.css}">
+    <title>登录</title>
+</head>
+
+<body>
+    <div id="content" class="container">
+        <div class="form-container">
+            <div class="sign-in-form">
+                <form th:action="@{/user/toLogin}" class="b1" method="post">
+                    <span>登录</span>
+					<p class="loginTishi" th:text="${err_msg}" th:if="${not #strings.isEmpty(err_msg)}"></p>
+                    <input maxlength="11" type="text" placeholder="请输入您的手机号" name="user_id"  id="Toiphone" alt="手机号" onblur="Toiphonecheck()">
+					<span class="" id="ToiphoneSpan" ></span>
+                    <input maxlength="16" type="password" placeholder="请输入您的密码" name="user_password" id="Toipwd" alt="密码" onblur="Toipwdcheck()">
+					<span class="sp" id="ToipwdSpan"></span>
+					<input type="submit" value="登录" class="checking">
+					<!-- <a href="" class="forget-pwd">忘记密码</a> -->
+					<button type="button"  class="forget-pwd">忘记密码</button>
+                </form>
+            </div>
+            <div class="sign-up-form">
+                <form th:action="@{/user/toRegister}" method="post">
+                    <span>注册</span>
+<!--					<p class="loginTishi" th:text="${err_msg}" th:if="${not #strings.isEmpty(err_msg)}"></p>-->
+					<input maxlength="6" type="text" placeholder="请输入您的邀请码" name="user_code" id="ivt" alt="邀请码" onblur="ivtcheck()">
+					<span class="sp" id="ivtSpan"></span>
+					
+					
+                    <input maxlength="11" type="text" placeholder="请设置您的手机号" name="user_id" id="iphone" alt="手机号" onblur="iphonecheck()">
+					<span class="sp" id="iphoneSpan"></span>
+					
+					
+					<input maxlength="10" type="text" placeholder="请设置您的昵称" name="user_name" id="iname" alt="昵称" onblur="inamecheck()">
+					<span class="sp" id="inameSpan"></span>
+					
+					
+                    <input maxlength="16" type="password" placeholder="请设置您的密码" name="user_password" id="ipwd" alt="密码" onblur="ipwdcheck()">
+					<span class="sp" id="ipwdSpan"></span>
+
+					<div class="select">
+						<p class="selectspan">请选择您的学校</p>
+						<select name="user_school" class="schools">
+								<option value ="江西农业大学">江西农业大学</option>
+								<option value ="江西师范大学">江西师范大学</option>
+								<option value ="南昌大学">南昌大学</option>
+						</select>
+					</div>
+					<div class="yanimage">
+						<input type="text" class="inputgri" name="code1" placeholder="请输入验证码"/>
+						<img id="num" src="image" th:src="@{/user/code1}" />
+						<a href="javascript:;" onclick="document.getElementById('num').src = '/share/user/code1?'+(new Date()).getTime()">换一张</a>
+					</div>
+					<input type="submit" value="注册"  class="checking" />
+                </form>
+            </div>
+			<div class="forget">
+<!--				th:action="@{/user/forgetPass}"-->
+				<form id="form_forget">
+				    <span>找回密码</span>
+					<p class="loginTishi" id="forget_yz"></p>
+				    <input maxlength="6" type="text" placeholder="请输入您的邀请码" class="yanzheng" name="user_code" id="backivt" alt="邀请码" onblur="backivtcheck()">
+					<span class="sp" id="backivtSpan"></span>
+
+					<input maxlength="11" type="text" placeholder="请输入您的手机号" id="backiphone" name="user_id" alt="手机号" onblur="backiphonecheck()">
+					<span class="sp" id="backiphoneSpan"></span>
+
+					<div class="yanimage2">
+						<input type="text" class="inputgri2" name="code2" placeholder="请输入验证码"/>
+						<img id="num2" src="image" th:src="@{/user/code2}" />
+						<a href="javascript:;" onclick="document.getElementById('num2').src = '/share/user/code2?'+(new Date()).getTime()">换一张</a>
+
+					</div>
+
+<!--&lt;!&ndash;					<span class="phone"></span>-->
+					<input type="button" name="" id="forgetPass" value="验证" class="checking" />
+<!--				    <button class="checking" id="forgetPass">验证</button>-->
+				</form>
+			</div>
+			<div class="giveback">
+				<form id="update_form">
+				    <span>修改密码为</span>
+					 <input maxlength="16" type="password" name="user_password" placeholder="请输入您的密码" id="xm">
+<!--					  <button class="sb1">提交</button>-->
+<!--					 <span class="backtishi">修改成功了</span>-->
+					<input type="button" name="" id="updateForm" value="提交" class="checking" />
+				</form>
+			</div>
+        </div>
+        <div class="tip-form">
+            <div class="sign-up-tip">
+                <span>还没有账号?</span>
+                <button id="to-regist-btn">注册</button>
+            </div>
+            <div class="sign-in-tip" style="display:none;">
+                <span>已有账号</span>
+                <button id="to-login-btn">登录</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="js/jquery.js" type="text/javascript" charset="utf-8" th:src="@{/sharestyle/js/jquery.js}"></script>
+<script src="js/login.js" type="text/javascript" charset="utf-8" th:src="@{/sharestyle/js/login.js}"></script>
+<script>
+    const signUp = document.querySelector('#to-regist-btn');
+	
+    const signIn = document.querySelector('#to-login-btn');
+    const tipForm = document.getElementsByClassName('tip-form');
+    const formContainer = document.getElementsByClassName('form-container');
+    const loginForm = document.getElementsByClassName('sign-in-form');
+    const registForm = document.getElementsByClassName('sign-up-form');
+    const loginTip = document.getElementsByClassName('sign-in-tip');
+    const registTip = document.getElementsByClassName('sign-up-tip');
+	const forgetpwd=document.querySelector(".forget-pwd");
+	const forgetform=document.getElementsByClassName("forget");
+	const checks=document.querySelector(".checking");
+	const back=document.getElementsByClassName("giveback");
+	
+    signUp.addEventListener('click', function() {
+        tipForm[0].style.transform = 'translateX(-100%)';
+        formContainer[0].style.transform = 'translateX(100%)';
+        loginForm[0].style.display = 'none';
+        registTip[0].style.display = 'none';
+        registForm[0].style.display = 'flex';
+        loginTip[0].style.display= 'flex';
+		forgetform[0].style.display = "none";
+		back[0].style.display = "none";
+    })
+    signIn.addEventListener('click', function() {
+        tipForm[0].style.transform = 'translateX(0)';
+        formContainer[0].style.transform = 'translateX(0)';
+        loginForm[0].style.display = 'flex';
+        registTip[0].style.display = 'flex';
+        registForm[0].style.display = 'none';
+        loginTip[0].style.display= 'none';
+		forgetform[0].style.display = "none";
+		back[0].style.display = "none";
+    })
+	forgetpwd.addEventListener("click", function(){
+		tipForm[0].style.transform = 'translateX(-100%)';
+		formContainer[0].style.transform = 'translateX(100%)';
+		registTip[0].style.display="none";
+		
+		loginForm[0].style.display = 'none';
+		loginTip[0].style.display= 'flex';
+		forgetform[0].style.display = "flex";
+		back[0].style.display = "none";
+	})
+
+	//第一次提交验证修改账户密码的
+	$("#forgetPass").click(function(){
+			$.ajax({
+				//请求方式
+				type : "POST",
+				//请求的媒体类型
+				// contentType: "application/json;charset=UTF-8",
+				//请求地址
+				url : "/share/user/forgetPass",
+				//数据，json字符串
+				data : $("#form_forget").serialize(),
+				dataType:"json",
+				//请求成功
+				success : function(data) {
+					console.log(data.result);
+					if (data.result=="success")
+					{
+						alert("验证成功，开始修改密码");
+						forgetform[0].style.display = "none";
+						back[0].style.display = "flex";
+					}else if(data.result=="error_user"){
+						$("#forget_yz").text("手机号错误找不到此用户，请重新输入");
+					}else if(data.result=="error_invite"){
+						$("#forget_yz").text("此用户邀请码错误，请重新输入");
+					}else{
+						$("#forget_yz").text("验证码错误，请重新输入");
+					}
+				},
+				//请求失败，包含具体的错误信息
+				error : function(e){
+					console.log(e.status);
+					console.log(e.responseText);
+				}
+			});
+
+	})
+	// 验证通过进行提交密码
+	$("#updateForm").click(function(){
+		$.ajax({
+			//请求方式
+			type : "POST",
+			//请求的媒体类型
+			// contentType: "application/json;charset=UTF-8",
+			//请求地址
+			url : "/share/user/updatePass",
+			//数据，json字符串
+			data : $("#update_form").serialize(),
+			dataType:"json",
+			//请求成功
+			success : function(data) {
+				console.log(data.result);
+				if (data.result=="success")
+				{
+					alert("密码修改成功");
+					window.location.replace("/share");
+				}else {
+					alert("密码修改失败");
+				}
+			},
+			//请求失败，包含具体的错误信息
+			error : function(e){
+				console.log(e.status);
+				console.log(e.responseText);
+			}
+		});
+
+	})
+	$(".sb1").click(function(){
+		var i=document.getElementById("xm").innerHTML;
+	
+
+		
+	})
+</script>
+</html>

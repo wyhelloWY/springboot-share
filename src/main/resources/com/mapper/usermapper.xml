@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.share.springboot.mapper.UserListMapper">
+    <select id="selectByPhone" resultType="com.share.springboot.entity.UserList" parameterType="String">
+        SELECT * FROM user_list
+        WHERE user_id = #{user_id}
+    </select>
+
+    <select id="selectAll" resultType="com.share.springboot.entity.UserList" parameterType="String">
+        SELECT * FROM user_list
+    </select>
+
+    <insert id="insertAll" parameterType="com.share.springboot.entity.UserList">
+        INSERT INTO user_list
+        (user_id,
+        user_name,
+        user_school,
+        user_password,
+        user_code
+        )
+        VALUES
+        (
+        #{user_id},
+        #{user_name},
+        #{user_school},
+        #{user_password},
+        #{user_code}
+        )
+    </insert>
+
+    <update id="updatePassword" parameterType="String">
+        update  user_list set user_password =#{user_password} where user_id=#{user_id}
+    </update>
+
+    <select id="selectImage" parameterType="String" resultType="String">
+        SELECT avatar_image FROM user_list where user_id = #{user_id}
+    </select>
+
+    <select id="selectUsername" resultType="String" parameterType="String">
+
+        select user_name from user_list where user_id = #{user_id}
+    </select>
+
+    <update id="updateOne"  parameterType="com.share.springboot.entity.UserList">
+
+        update user_list set user_name = #{user_name},
+        avatar_image=#{avatar_image},
+         user_age=#{user_age},
+         user_motto=#{user_motto}
+        where user_id = #{user_id}
+    </update>
+</mapper>
